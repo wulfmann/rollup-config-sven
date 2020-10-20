@@ -1,3 +1,5 @@
+![Banner](docs/images/banner.jpg)
+
 # sven
 
 `sven` is a rollup config module.
