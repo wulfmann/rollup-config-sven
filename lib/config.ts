@@ -45,6 +45,7 @@ export class Config {
   constructor(configPath = 'sven.config.js') {
     this.config = this.loadConfig(configPath);
     this.cwd = this.config.cwd || process.cwd();
+    console.log(this.cwd)
     this.id = this.config.buildId || nanoid();
     this.entrypointsDir = `${this.cwd}/.sven/${this.id}/entrypoints`;
   }

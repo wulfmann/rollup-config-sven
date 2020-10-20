@@ -1,0 +1,14 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c node:sven"
+  },
+  "devDependencies": {
+    "rollup": "^2.32.0",
+    "svelte": "^3.29.0",
+    "rollup-config-sven": "../lib"
+  }
+}

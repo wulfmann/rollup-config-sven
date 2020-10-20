@@ -1,5 +1,5 @@
 {
-  "name": "svenerate",
+  "name": "rollup-config-sven",
   "version": "0.1.6",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

@@ -28,7 +28,7 @@ const autoGenerateRoutes = (config: Config): Promise<Routes> => {
             filename === 'index' ? baseDir : `${baseDir}/${filename}`;
 
           return {
-            src: path.join(__dirname, '../', file),
+            src: path.join(config.cwd, file),
             path: resource ? resource : '/',
             entrypoint: `${entrypointsDir}${resource ? resource : '/index'}.js`,
           };

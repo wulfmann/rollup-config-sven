@@ -78,8 +78,10 @@ export class Sven {
     }
   }
 
-  public async generateConfig(): Promise<RollupOptions[]> {
+  public async generate(): Promise<RollupOptions[]> {
     const routes = await this.build.generateRoutes()
     return routes.map(r => this.createRollupConfig(r))
   }
 }
+
+export default new Sven().generate();
