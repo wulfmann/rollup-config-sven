@@ -7,23 +7,17 @@ import { terser } from 'rollup-plugin-terser';
 
 // Dependencies
 import { trimPrefix } from './utils';
-import { Config, Route, Routes } from './config';
+import { Config, Route } from './config';
 import { Build } from './build';
 import { RollupOptions } from 'rollup';
 
 export class Sven {
   public config: Config;
   public build: Build;
-  public routes: Routes = [];
 
   constructor() {
     this.config = new Config();
     this.build = new Build(this.config);
-    this.init();
-  }
-
-  async init() {
-    this.routes = await this.build.generateRoutes();
   }
 
   public createRollupConfig(route: Route) {
@@ -68,6 +62,8 @@ export class Sven {
         dir: `${config.out}/assets`,
       },
 
+      context: 'null',
+
       plugins,
 
       watch: {
@@ -82,8 +78,9 @@ export class Sven {
     }
   }
 
-  public generateConfig() {
-    return this.routes.map(this.createRollupConfig)
+  public async generateConfig(): Promise<RollupOptions[]> {
+    const routes = await this.build.generateRoutes()
+    return routes.map(this.createRollupConfig)
   }
 }
 

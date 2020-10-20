@@ -1,7 +1,7 @@
 # sven
 
 ```bash
-npm i -g svenerate
+npm i -g svelte svenerate
 ```
 
 `sven` is a small static site generator for [svelte](https://svelte.dev/).
