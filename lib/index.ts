@@ -9,6 +9,7 @@ import { terser } from "rollup-plugin-terser";
 import { trimPrefix } from "./utils";
 import { Config, Route, Routes } from './config'
 import { Build } from "./build";
+import { RollupOptions } from "rollup";
 
 export class Sven {
   public config: Config;
@@ -35,7 +36,31 @@ export class Sven {
 
     this.build.createRoute(route);
 
-    const rollupConfig = {
+    const plugins = [
+      svelte({
+        // dev: !config.production,
+        css: (css) => {
+          css.write(
+            trimPrefix(`${trimPrefix(route.path, "/")}/main.css`, "/"),
+            config.sourcemap
+          );
+        },
+      }),
+
+      resolve(),
+      commonjs(),
+      replace({
+        "process.env.NODE_ENV": JSON.stringify(
+          config.production ? "production" : "development"
+        ),
+      })
+    ];
+
+    if (config.production) {
+      plugins.push(terser())
+    }
+
+    const rollupConfig: RollupOptions = {
       input: route.entrypoint,
 
       output: {
@@ -46,26 +71,7 @@ export class Sven {
         dir: `${config.out}/assets`,
       },
 
-      plugins: [
-        svelte({
-          // dev: !config.production,
-          css: (css) => {
-            css.write(
-              trimPrefix(`${trimPrefix(route.path, "/")}/main.css`, "/"),
-              config.sourcemap
-            );
-          },
-        }),
-
-        resolve(),
-        commonjs(),
-        replace({
-          "process.env.NODE_ENV": JSON.stringify(
-            config.production ? "production" : "development"
-          ),
-        }),
-        config.production && terser(),
-      ],
+      plugins,
 
       watch: {
         clearScreen: false,
