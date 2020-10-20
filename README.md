@@ -1,22 +1,34 @@
 # sven
 
-sven is a small static site generator for svelte.
+`sven` is a small static site generator for [svelte](https://svelte.dev/).
 
-it purposesfully implements a small number of features. if you have a complex use-case, it may be better to evsluate one of these:
+It implements a very small number of features. If you have a complex use-case, it may be better to evsluate one of these:
 
-- sapper
-- elder
+- [sapper](https://sapper.svelte.dev/)
+- [elder](https://github.com/Elderjs/elderjs)
+
+## Quickstart
+
+There are a few different ways you can use `sven`.
+
+- cli (coming soon)
+- manual (coming soon)
+- rollup
+
+### Rollup
+
+```typescript
+// rollup.config.js
+
+import { Sven } from '@wulfmann/sven';
+export default new Sven().generateConfig()
+```
 
 ## API
 
-sven is a glorified rollup config generator. it performs the following steps:
+Under the hood, all `sven` is doing is dynamically generating rollup config. Here are the high-level steps it performs:
 
-- generates entrypoints for every .svelte file in the pages directory
-- generates a .js file for every entrypoint into the assets directory
-- generates a .html file for each entrypoint into the public directory
-- generates a .css file for every entrypoint into the assets directory
-
-## Options
-
-- clean urls
-- hashed filenames
+- generates an entrypoint for every `.svelte` file in the `pages` directory
+- generates a `.js` file for every entrypoint into the `assets` directory
+- generates a `.html` file for each entrypoint into the `public` directory
+- generates a `.css` file for every entrypoint into the `assets` directory

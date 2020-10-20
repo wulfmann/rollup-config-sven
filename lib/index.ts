@@ -81,4 +81,10 @@ export class Sven {
       return rollupConfig;
     }
   }
+
+  public generateConfig() {
+    return this.routes.map(this.createRollupConfig)
+  }
 }
+
+export default new Sven().generateConfig();
