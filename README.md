@@ -1,5 +1,9 @@
 # sven
 
+```bash
+npm i -g svenerate
+```
+
 `sven` is a small static site generator for [svelte](https://svelte.dev/).
 
 It implements a very small number of features. If you have a complex use-case, it may be better to evsluate one of these:
@@ -20,7 +24,7 @@ There are a few different ways you can use `sven`.
 ```typescript
 // rollup.config.js
 
-import { Sven } from '@wulfmann/sven';
+import { Sven } from 'svenerate';
 export default new Sven().generateConfig()
 ```
 

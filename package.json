@@ -1,11 +1,12 @@
 {
-  "name": "@wulfmann/sven",
+  "name": "svenerate",
   "version": "0.0.1",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": "git@github.com:wulfmann/sven.git",
   "author": "Joe Snell <joepsnell@gmail.com>",
   "license": "MIT",
+  "private": false,
   "keywords": [
     "svelte",
     "ssg"
