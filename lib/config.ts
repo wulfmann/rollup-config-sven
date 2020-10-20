@@ -46,7 +46,7 @@ export class Config {
     this.config = this.loadConfig(configPath);
     this.cwd = this.config.cwd || process.cwd();
     this.id = this.config.buildId || nanoid();
-    this.entrypointsDir = `${this.config.cwd}/.sven/${this.id}/entrypoints`;
+    this.entrypointsDir = `${this.cwd}/.sven/${this.id}/entrypoints`;
   }
 
   private loadConfig(configPath: string): ConfigOptions {

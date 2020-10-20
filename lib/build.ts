@@ -66,12 +66,16 @@ export class Build {
 
   createPage(route: Route) {
     const template = new Page();
+    let prefix = `/assets${route.path}`;
+    if (!(prefix.endsWith('/'))) {
+      prefix += '/'
+    }
     template
       .render({
         title: route.path.replace('/', ' ').trim(),
         scripts: {
-          css: `/assets${route.path}/main.css`,
-          js: `/assets${route.path}/main.js`,
+          css: `${prefix}main.css`,
+          js: `${prefix}main.js`,
         },
       })
       .save(`${this.config.config.out}${route.path}/index.html`);
