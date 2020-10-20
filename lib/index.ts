@@ -1,15 +1,15 @@
 // Rollup
-import svelte from "rollup-plugin-svelte";
-import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import replace from "@rollup/plugin-replace";
-import { terser } from "rollup-plugin-terser";
+import svelte from 'rollup-plugin-svelte';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import replace from '@rollup/plugin-replace';
+import { terser } from 'rollup-plugin-terser';
 
 // Dependencies
-import { trimPrefix } from "./utils";
-import { Config, Route, Routes } from './config'
-import { Build } from "./build";
-import { RollupOptions } from "rollup";
+import { trimPrefix } from './utils';
+import { Config, Route, Routes } from './config';
+import { Build } from './build';
+import { RollupOptions } from 'rollup';
 
 export class Sven {
   public config: Config;
@@ -19,20 +19,17 @@ export class Sven {
   constructor() {
     this.config = new Config();
     this.build = new Build(this.config);
-    this.init()
+    this.init();
   }
 
   async init() {
-    this.routes = await this.build.generateRoutes()
+    this.routes = await this.build.generateRoutes();
   }
 
   public createRollupConfig(route: Route) {
     const { config } = this.config;
 
-    const entryName = trimPrefix(
-      `${trimPrefix(route.path, "/")}/main.js`,
-      "/"
-    );
+    const entryName = trimPrefix(`${trimPrefix(route.path, '/')}/main.js`, '/');
 
     this.build.createRoute(route);
 
@@ -41,7 +38,7 @@ export class Sven {
         // dev: !config.production,
         css: (css) => {
           css.write(
-            trimPrefix(`${trimPrefix(route.path, "/")}/main.css`, "/"),
+            trimPrefix(`${trimPrefix(route.path, '/')}/main.css`, '/'),
             config.sourcemap
           );
         },
@@ -50,14 +47,14 @@ export class Sven {
       resolve(),
       commonjs(),
       replace({
-        "process.env.NODE_ENV": JSON.stringify(
-          config.production ? "production" : "development"
+        'process.env.NODE_ENV': JSON.stringify(
+          config.production ? 'production' : 'development'
         ),
-      })
+      }),
     ];
 
     if (config.production) {
-      plugins.push(terser())
+      plugins.push(terser());
     }
 
     const rollupConfig: RollupOptions = {
@@ -65,7 +62,7 @@ export class Sven {
 
       output: {
         sourcemap: config.sourcemap,
-        format: "esm",
+        format: 'esm',
         entryFileNames: entryName,
         chunkFileNames: entryName,
         dir: `${config.out}/assets`,
@@ -79,7 +76,7 @@ export class Sven {
     };
 
     if (config.rollup) {
-      return config.rollup(rollupConfig)
+      return config.rollup(rollupConfig);
     } else {
       return rollupConfig;
     }

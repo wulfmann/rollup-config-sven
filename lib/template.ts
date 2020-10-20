@@ -1,6 +1,6 @@
-import fs from "fs";
-import path from "path";
-import ejs from "ejs";
+import fs from 'fs';
+import path from 'path';
+import ejs from 'ejs';
 
 class Writeable {
   constructor(public content: string) {
@@ -25,19 +25,19 @@ class Template {
     return fs.readFileSync(path).toString();
   }
 
-  render(data: {[key: string]: any}) {
+  render(data: { [key: string]: any }) {
     return new Writeable(<string>ejs.render(this.template, data, {}));
   }
 }
 
 export class Page extends Template {
   constructor() {
-    super(path.join(__dirname, "./templates/page.ejs"));
+    super(path.join(__dirname, './templates/page.ejs'));
   }
 }
 
 export class Entrypoint extends Template {
   constructor() {
-    super(path.join(__dirname, "./templates/entrypoint.ejs"));
+    super(path.join(__dirname, './templates/entrypoint.ejs'));
   }
 }

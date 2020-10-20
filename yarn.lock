@@ -368,6 +368,11 @@ picomatch@^2.2.2:
   resolved "https://ramseysolutions.jfrog.io/artifactory/api/npm/npm/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
   integrity sha1-IfMz6ba46v8CRo9RRupAbTRfTa0=
 
+prettier@^2.1.2:
+  version "2.1.2"
+  resolved "https://ramseysolutions.jfrog.io/artifactory/api/npm/npm/prettier/-/prettier-2.1.2.tgz#3050700dae2e4c8b67c4c3f666cdb8af405e1ce5"
+  integrity sha1-MFBwDa4uTItnxMP2Zs24r0BeHOU=
+
 randombytes@^2.1.0:
   version "2.1.0"
   resolved "https://ramseysolutions.jfrog.io/artifactory/api/npm/npm/randombytes/-/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"

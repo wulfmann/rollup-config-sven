@@ -1,9 +1,9 @@
-import path from "path";
-import glob from "glob";
+import path from 'path';
+import glob from 'glob';
 
-import { Config, Route, Routes } from "./config";
-import { trimPrefix } from "./utils";
-import { Page, Entrypoint } from "./template";
+import { Config, Route, Routes } from './config';
+import { trimPrefix } from './utils';
+import { Page, Entrypoint } from './template';
 
 const autoGenerateRoutes = (config: Config): Promise<Routes> => {
   return new Promise((resolve, reject) => {
@@ -25,12 +25,12 @@ const autoGenerateRoutes = (config: Config): Promise<Routes> => {
           const baseDir = trimPrefix(path.dirname(file), pageDir);
           const filename = path.basename(file, path.extname(file));
           const resource =
-            filename === "index" ? baseDir : `${baseDir}/${filename}`;
+            filename === 'index' ? baseDir : `${baseDir}/${filename}`;
 
           return {
-            src: path.join(__dirname, "../", file),
-            path: resource ? resource : "/",
-            entrypoint: `${entrypointsDir}${resource ? resource : "/index"}.js`,
+            src: path.join(__dirname, '../', file),
+            path: resource ? resource : '/',
+            entrypoint: `${entrypointsDir}${resource ? resource : '/index'}.js`,
           };
         })
       );
@@ -50,8 +50,8 @@ export class Build {
   }
 
   createRoute(route: Route) {
-      this.createEntrypoint(route)
-      this.createPage(route)
+    this.createEntrypoint(route);
+    this.createPage(route);
   }
 
   createEntrypoint(route: Route) {
@@ -59,7 +59,7 @@ export class Build {
     template
       .render({
         path: route.src,
-        target: "document.body",
+        target: 'document.body',
       })
       .save(route.entrypoint);
   }
@@ -68,7 +68,7 @@ export class Build {
     const template = new Page();
     template
       .render({
-        title: route.path.replace("/", " ").trim(),
+        title: route.path.replace('/', ' ').trim(),
         scripts: {
           css: `/assets${route.path}/main.css`,
           js: `/assets${route.path}/main.js`,
