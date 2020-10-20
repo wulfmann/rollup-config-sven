@@ -1,7 +1,9 @@
 # sven
 
+`sven` is a rollup config module.
+
 ```bash
-npm i -g svelte svenerate
+npm i -g svelte rollup-config-sven
 ```
 
 `sven` is a small static site generator for [svelte](https://svelte.dev/).
@@ -13,19 +15,10 @@ It implements a very small number of features. If you have a complex use-case, i
 
 ## Quickstart
 
-There are a few different ways you can use `sven`.
+Add the following script to your `package.json` scripts section:
 
-- cli (coming soon)
-- manual (coming soon)
-- rollup
-
-### Rollup
-
-```typescript
-// rollup.config.js
-
-import { Sven } from 'svenerate';
-export default new Sven().generateConfig()
+```json
+"build": "rollup -c node:sven" 
 ```
 
 ## API

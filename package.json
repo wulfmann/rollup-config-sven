@@ -9,7 +9,9 @@
   "private": false,
   "keywords": [
     "svelte",
-    "ssg"
+    "ssg",
+    "rollup",
+    "config"
   ],
   "scripts": {
     "build:ts": "tsc",
