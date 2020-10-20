@@ -2,13 +2,11 @@
 
 # sven
 
-`sven` is a rollup config module.
+`sven` is a minimal static site generator for [svelte](https://svelte.dev/). It is a [rollup config](https://rollupjs.org/guide/en/#loading-a-configuration-from-a-node-package) module.
 
 ```bash
 npm i -g svelte rollup rollup-config-sven
 ```
-
-`sven` is a small static site generator for [svelte](https://svelte.dev/).
 
 It implements a very small number of features. If you have a complex use-case, it may be better to evsluate one of these:
 
