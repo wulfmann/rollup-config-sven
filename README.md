@@ -3,7 +3,7 @@
 `sven` is a rollup config module.
 
 ```bash
-npm i -g svelte rollup-config-sven
+npm i -g svelte rollup rollup-config-sven
 ```
 
 `sven` is a small static site generator for [svelte](https://svelte.dev/).
