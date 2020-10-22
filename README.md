@@ -49,23 +49,8 @@ You can modify the `sven` configuration with a `sven.config.js`.
 
 ```js
 export default {
-  /**
-   * `output` is used as the output section of the rollup config.
-   */
-  output: {
-    dir: "public",
-    format: "esm",
-    entryFileNames: "<assetDir>/[hash].js",
-    chunkFileNames: "<assetDir>/[hash].js",
-  },
-
   assetDir: 'assets',
 
-  /**
-   *  `pages` is a globbed string to gather the pages you'd like to generate.
-   */
-  pages: 'pages/**/*.svelte',
-  
   /**
    * `svelteConfig` is an object that is passed into the svelte rollup plugin.
    */
