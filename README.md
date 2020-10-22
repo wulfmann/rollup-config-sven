@@ -31,3 +31,59 @@ $ npx rollup -c node:sven"
 
 You should now have a `public` directory containing your static files!
 
+Check out the [example](/example) for a more advanced example.
+
+## Overview
+
+`sven` is based on rollup, and uses svelte components to generate static html pages + assets.
+
+It accomplishes this by dynamically creating virtual modules as rollup inputs that export the page components with optional props / targets.
+
+The CSS and Javascript that is parsed from the page components are split into asset files.
+
+These assets are linked to an html file that is generated.
+
+## Configuration
+
+You can modify the `sven` configuration with a `sven.config.js`.
+
+```js
+export default {
+  /**
+   * `output` is used as the output section of the rollup config.
+   */
+  output: {
+    dir: "public",
+    format: "esm",
+    entryFileNames: "<assetDir>/[hash].js",
+    chunkFileNames: "<assetDir>/[hash].js",
+  },
+  
+  treeShake: true,
+  cache: true,
+  assetDir: 'assets',
+
+  /**
+   *  `pages` can be a string (glob-supported) or a function that returns a list of filepaths.
+   */
+  pages: 'pages/**/*.svelte',
+  
+  /**
+   * `svelteConfig` is an object that is passed into the svelte rollup plugin.
+   */
+  svelteConfig: {
+    emitCss: true
+  },
+  
+  /**
+   * `htmlConfig` is an object that is passed into the html rollup plugin.
+   */
+  htmlConfig: {},
+  
+  /**
+   * Enables clean URLs
+   */
+  cleanUrls: true
+}
+```
+
