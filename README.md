@@ -58,13 +58,11 @@ export default {
     entryFileNames: "<assetDir>/[hash].js",
     chunkFileNames: "<assetDir>/[hash].js",
   },
-  
-  treeShake: true,
-  cache: true,
+
   assetDir: 'assets',
 
   /**
-   *  `pages` can be a string (glob-supported) or a function that returns a list of filepaths.
+   *  `pages` is a globbed string to gather the pages you'd like to generate.
    */
   pages: 'pages/**/*.svelte',
   
@@ -74,11 +72,6 @@ export default {
   svelteConfig: {
     emitCss: true
   },
-  
-  /**
-   * `htmlConfig` is an object that is passed into the html rollup plugin.
-   */
-  htmlConfig: {},
   
   /**
    * Enables clean URLs
