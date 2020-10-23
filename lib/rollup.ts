@@ -8,6 +8,8 @@ import copy from 'rollup-plugin-copy';
 import cssChunks from 'rollup-plugin-css-chunks';
 import path from 'path';
 
+import postcss from 'rollup-plugin-postcss'
+
 import { loadConfig, autoGeneratePages, Config } from './config';
 
 const cleanRoute = (route: string, config: Config) => {
@@ -49,6 +51,13 @@ export const createConfig = async () => {
       title: name,
     };
 
+    const parts = name.split('/');
+    const lastPart = parts.pop();
+
+    const assetPrefix = `${config.assetDir}/${config.pagesDir}`
+    let entryFileNames = `${assetPrefix}/${parts.join('/')}/${lastPart}.[hash]`;
+    let chunkFileNames = `${assetPrefix}/[name].[hash]`;
+
     return {
       cache: true,
       treeshake: true,
@@ -57,16 +66,14 @@ export const createConfig = async () => {
       output: {
         dir: config.outDir,
         format: 'esm',
-        entryFileNames: `${config.assetDir}/${name}/[hash].js`,
-        chunkFileNames: `${config.assetDir}/[name].[hash].js`,
+        entryFileNames: `${entryFileNames}.js`,
+        chunkFileNames: `${chunkFileNames}.js`,
         sourcemap: config.sourceMaps,
 
         manualChunks: {
           'svelte': ['node_modules/svelte']
         }
       },
-
-      preserveModules: false,
 
       plugins: [
         copy({
@@ -79,10 +86,12 @@ export const createConfig = async () => {
         }),
 
         cssChunks({
-          chunkFileNames: `${config.assetDir}/[name].[hash].css`,
-          entryFileNames: `${config.assetDir}/${name}/[hash].css`,
+          entryFileNames: `${entryFileNames}.css`,
+          chunkFileNames: `${chunkFileNames}.css`,
           sourcemap: config.sourceMaps
         }),
+
+        postcss(),
 
         /**
          * We create a virtual module to use as the entry point.

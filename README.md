@@ -57,24 +57,16 @@ This leaves you with a deployable static site in the <outDir>.
 
 ### Asset Bundling Strategy
 
-Paths in the <commonStyles> array are bundled into a common stylesheet. Any component that imports one of these paths will result in a link being added to the generated HTML file.
+Any CSS or Javascript that is parsed from the svelte component is emitted as a chunk into `<assetDir>/<pagesDir>` under the path of the route.
 
 Example:
 
 ```
-styles/common.css -> assets/common.[hash].css
+admin/dashboard.svelte -> <assetDir>/<pagesDir>/admin/dashboard.[hash].css
+admin/dashboard.svelte -> <assetDir>/<pagesDir>/admin/dashboard.[hash].js
 ```
 
-Any CSS or Javascript that is parsed from the svelte component is emitted as a chunk in the <assetDir> under the path of the route.
-
-Example:
-
-```
-admin/dashboard.svelte -> assets/admin/dashboard/[hash].css
-admin/dashboard.svelte -> assets/admin/dashboard/[hash].js
-```
-
-Svelte itself is also treated as an external module so that it can be cached across routes. It is generated into `assets/svelte.[hash].js` and linked in all resulting HTML files.
+Svelte itself is also treated as an external module so that it can be cached across routes. It is generated into `<assetDir>/<pagesDir>/svelte.[hash].js` and linked in all resulting HTML files.
 
 ## Configuration
 
