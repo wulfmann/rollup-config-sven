@@ -114,6 +114,11 @@ module.exports = {
    * about.svelte -> about/index.html
    */ 
   cleanUrls: true,
+
+  /**
+   * Sets a list of paths to be bundled under a common.[hash].css file
+   */
+  commonStyles: ['styles/common.css'],
   
   /**
    * Enables production optimizations
