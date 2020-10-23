@@ -26,7 +26,7 @@ $ yarn add svelte rollup rollup-config-sven -D
 After you've installed the dependencies, you can run the build with:
 
 ```bash
-$ npx rollup -c node:sven" 
+$ npx rollup -c node:sven
 ```
 
 You should now have a `public` directory containing your static files!
@@ -35,27 +35,78 @@ Check out the [example](/example) for a more advanced example.
 
 ## Overview
 
-`sven` is based on rollup, and uses svelte components to generate static html pages + assets.
+`sven` is built on rollup, and uses the following strategy:
 
-It accomplishes this by dynamically creating virtual modules as rollup inputs that export the page components with optional props / targets.
+### Routing
 
-The CSS and Javascript that is parsed from the page components are split into asset files.
+`sven` uses the filesystem to define routing. All svelte components found in the <pagesDir> are treated as individual routes.
 
-These assets are linked to an html file that is generated.
+Each svelte component is treated as an individual app. An entrypoint is dynamically generated as a [virtual module](https://github.com/rollup/plugins/tree/master/packages/virtual) at compile-time and used as the rollup input.
+
+This is processed by a variety of rollup plugins that perform the following steps for each detected route:
+
+- Compile Svelte Component
+- Generate files for the css and js chunks from the component
+- Generate an HTML file with links to these chunks.
+
+This leaves you with a deployable static site in the <outDir>.
 
 ## Configuration
 
 You can modify the `sven` configuration with a `sven.config.js`.
 
+You can view the default config [here](/lib/config.ts).
+
 ```js
 module.exports = {
+  /**
+   * Set the output directory
+   */ 
   outDir: 'public',
+
+  /**
+   * Set the asset directory.
+   * All css and js files are put here
+   */ 
   assetDir: 'assets',
-  cleanUrls: true,
+
+  /**
+   * Set the pages directory.
+   * All .svelte files in this directory are used as individual
+   * routes
+   */ 
   pagesDir: 'pages',
+
+  /**
+   * Set the static assets directory.
+   * Files in this directory are copied to the <outDir>
+   */
   staticDir: 'static',
+
+  /**
+   * Enables clean urls.
+   * Nested routes will use their name as a directory name and
+   * will have an index.html created inside.
+   * 
+   * Example:
+   * 
+   * about.svelte -> about/index.html
+   */ 
+  cleanUrls: true,
+  
+  /**
+   * Enables production optimizations
+   */ 
   production: process.env.NODE_ENV === "production" || !process.env.ROLLUP_WATCH,
+
+  /**
+   * Enables source map generation
+   */ 
   sourceMaps: !production,
+
+  /**
+   * This object is passed directly into the rollup-plugin-svelte function
+   */ 
   svelteConfig: {
     emitCss: true
   }
