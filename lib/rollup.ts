@@ -62,10 +62,11 @@ export const createConfig = async () => {
         sourcemap: config.sourceMaps,
 
         manualChunks: {
-          'svelte': ['node_modules/svelte'],
-          'common.styles': config.commonStyles
+          'svelte': ['node_modules/svelte']
         }
       },
+
+      preserveModules: false,
 
       plugins: [
         copy({
@@ -80,6 +81,7 @@ export const createConfig = async () => {
         cssChunks({
           chunkFileNames: `${config.assetDir}/[name].[hash].css`,
           entryFileNames: `${config.assetDir}/${name}/[hash].css`,
+          sourcemap: config.sourceMaps
         }),
 
         /**
@@ -97,8 +99,6 @@ export const createConfig = async () => {
           dedupe: ['svelte'],
           preferBuiltins: true,
         }),
-
-        // css({ output: cssFilename }),
 
         commonjs({ sourceMap: config.sourceMaps }),
 

@@ -1,4 +1,3 @@
 module.exports = {
-    outDir: 'out',
-    cleanUrls: false
+    outDir: 'out'
 };

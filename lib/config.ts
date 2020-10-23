@@ -17,6 +17,7 @@ export interface Config {
 
 export const loadConfig = () => {
     const production = process.env.NODE_ENV === "production" || !process.env.ROLLUP_WATCH;
+    const sourceMaps = !production;
 
     const defaultConfig: Config = {
         assetDir: 'assets',
@@ -26,7 +27,7 @@ export const loadConfig = () => {
         commonStyles: ['styles/common.css'],
         cleanUrls: true,
         production,
-        sourceMaps: !production,
+        sourceMaps,
         svelteConfig: {
             emitCss: true
         }
