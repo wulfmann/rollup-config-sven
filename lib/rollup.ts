@@ -78,7 +78,7 @@ export const createConfig = async () => {
         }),
 
         cssChunks({
-          chunkFileNames: `${config.assetDir}/${name}/[hash].css`,
+          chunkFileNames: `${config.assetDir}/[name].[hash].css`,
           entryFileNames: `${config.assetDir}/${name}/[hash].css`,
         }),
 
