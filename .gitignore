@@ -1,5 +1,7 @@
 .DS_Store
-*.js
-*.d.ts
+example/**/*.js
+lib/**/*.js
+lib/**/*.d.ts
+
 node_modules
 yarn-error.log
