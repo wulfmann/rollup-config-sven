@@ -54,9 +54,13 @@ export const createConfig = async () => {
     const parts = name.split('/');
     const lastPart = parts.pop();
 
+    console.log(parts, parts.join('/'))
+
     const assetPrefix = `${config.assetDir}/${config.pagesDir}`
-    let entryFileNames = `${assetPrefix}/${parts.join('/')}/${lastPart}.[hash]`;
+    let entryFileNames = `${assetPrefix}/${parts.length ? `${parts.join('/')}/` : ''}${lastPart}.[hash]`;
     let chunkFileNames = `${assetPrefix}/[name].[hash]`;
+
+    console.log(entryFileNames, chunkFileNames)
 
     return {
       cache: true,
