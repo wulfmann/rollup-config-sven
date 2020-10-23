@@ -3,8 +3,9 @@ import glob from 'glob';
 
 export interface Config {
     assetDir: string;
-    pages: string;
+    pagesDir: string;
     outDir: string;
+    staticDir: string
     cleanUrls: boolean;
     production: boolean;
     sourceMaps: boolean;
@@ -18,8 +19,9 @@ export const loadConfig = () => {
 
     const defaultConfig: Config = {
         assetDir: 'assets',
-        pages: `pages/**/*.svelte`,
+        pagesDir: `pages`,
         outDir: 'public',
+        staticDir: 'static',
         cleanUrls: true,
         production,
         sourceMaps: !production,
@@ -35,9 +37,7 @@ export const loadConfig = () => {
 
 export const autoGeneratePages = (config: Config): Promise<string[]> => {
   return new Promise((resolve, reject) => {
-    const pageGlob = config.pages;
-
-    glob(pageGlob, {}, function (err: any, files: string[]) {
+    glob(`${config.pagesDir}/**/*.svelte`, {}, function (err: any, files: string[]) {
       if (err) {
         reject(err);
       }

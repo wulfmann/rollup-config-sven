@@ -52,7 +52,8 @@ module.exports = {
   outDir: 'public',
   assetDir: 'assets',
   cleanUrls: true,
-  pages: 'pages/**/*.svelte',
+  pagesDir: 'pages',
+  staticDir: 'static',
   production: process.env.NODE_ENV === "production" || !process.env.ROLLUP_WATCH,
   sourceMaps: !production,
   svelteConfig: {

@@ -1,45 +1,53 @@
-import svelte from "rollup-plugin-svelte";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import html from "@rollup/plugin-html";
-import { terser } from "rollup-plugin-terser";
+import svelte from 'rollup-plugin-svelte';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import html from '@rollup/plugin-html';
+import { terser } from 'rollup-plugin-terser';
 import virtual from '@rollup/plugin-virtual';
-import css from "rollup-plugin-css-only";
-import path from 'path'
+import copy from 'rollup-plugin-copy';
+import cssChunks from 'rollup-plugin-css-chunks';
+import path from 'path';
 
-import { loadConfig, autoGeneratePages, Config } from "./config";
+import { loadConfig, autoGeneratePages, Config } from './config';
 
-const getPathName = (page: string, clean: boolean): string => {
-  const pages = 'pages'
+const cleanRoute = (route: string, config: Config) => {
+  let result = route;
+  if (route.startsWith(config.pagesDir)) {
+    result = route.slice(config.pagesDir.length);
+  }
+
+  if (result.startsWith('/')) {
+    result = result.slice(1);
+  }
+
+  return result;
+};
+
+const getPathName = (page: string, config: Config): string => {
   const name = path.parse(page);
+  const parent = cleanRoute(name.dir, config);
 
-  if (name.name === 'index') {
-    if (name.dir === pages) {
-      return 'index'
-    } else {
-      return `${name.dir}/index`
-    }
+  let routeName = name.name;
+
+  if (name.name !== 'index' && config.cleanUrls) {
+    routeName = `${name.name}/index`;
   }
 
-  if (clean) {
-    return `${name.name}/index`
-  } else {
-    return name.name
-  }
-}
+  return parent ? `${parent}/${routeName}` : routeName
+};
 
 export const createConfig = async () => {
-  const config: Config = loadConfig()
+  const config: Config = loadConfig();
   const pages = await autoGeneratePages(config);
 
   return pages.map((page: string) => {
     const entry = `import Comp from '${process.cwd()}/${page}';\nexport default new Comp({ target: document.body })`;
-    const name = getPathName(page, config.cleanUrls);
-    const cssFilename = `${config.outDir}/${config.assetDir}/${name}.css`;
-  
+    const name = getPathName(page, config);
+
     const htmlConfig = {
-      fileName: name + '.html'
-    }
+      fileName: name + '.html',
+      title: name,
+    };
 
     return {
       cache: true,
@@ -48,12 +56,26 @@ export const createConfig = async () => {
 
       output: {
         dir: config.outDir,
-        format: "esm",
-        entryFileNames: `${config.assetDir}/[hash].js`,
-        chunkFileNames: `${config.assetDir}/[hash].js`,
+        format: 'esm',
+        entryFileNames: `${config.assetDir}/${name}/[hash].js`,
+        chunkFileNames: `${config.assetDir}/${name}/[hash].js`,
+        sourcemap: config.sourceMaps
       },
 
       plugins: [
+        copy({
+          targets: [
+            {
+              src: `${config.staticDir}/*`,
+              dest: 'public',
+            },
+          ],
+        }),
+
+        cssChunks({
+          entryFileNames: `${config.assetDir}/${name}/[hash].css`,
+        }),
+
         /**
          * We create a virtual module to use as the entry point.
          * Functionally this treats each page as it's own app
@@ -66,12 +88,14 @@ export const createConfig = async () => {
 
         nodeResolve({
           browser: true,
-          dedupe: ["svelte"],
+          dedupe: ['svelte'],
           preferBuiltins: true,
         }),
 
-        css({ output: cssFilename }),
+        // css({ output: cssFilename }),
+
         commonjs({ sourceMap: config.sourceMaps }),
+
         config.production && terser(),
       ],
     };

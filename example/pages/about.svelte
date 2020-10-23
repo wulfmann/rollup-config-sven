@@ -3,11 +3,11 @@
 </script>
 
 <main>
-    <h1>Home</h1>
+    <h1>About</h1>
 </main>
 
 <style>
     main {
-        background: blue;
+        background: green;
     }
 </style>

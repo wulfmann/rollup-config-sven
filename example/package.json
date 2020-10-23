@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "rollup": "latest",
-    "svelte": "latest",
-    "rollup-config-sven": "latest"
+    "rollup-config-sven": "latest",
+    "svelte": "latest"
   }
 }
