@@ -35,7 +35,6 @@
     "@types/rollup__plugin-virtual": "^2.0.1",
     "prettier": "^2.1.2",
     "rollup": "^2.32.1",
-    "rollup-plugin-extract-bundle-tree": "^1.2.0",
     "svelte": "^3.29.0",
     "typescript": "^4.0.3"
   },

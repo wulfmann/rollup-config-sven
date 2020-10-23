@@ -1,1 +1,0 @@
-declare module 'rollup-plugin-extract-bundle-tree'

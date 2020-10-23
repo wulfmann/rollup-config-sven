@@ -563,11 +563,6 @@ rollup-plugin-css-chunks@^1.2.8:
     rollup-pluginutils "^2.7.1"
     sourcemap-codec "^1.4.4"
 
-rollup-plugin-extract-bundle-tree@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-extract-bundle-tree/-/rollup-plugin-extract-bundle-tree-1.2.0.tgz#fb8018eed4c4eabdf03c96deb7be7ec1c00195e4"
-  integrity sha512-en6AyJyz7I8yvU9DXUHX3Quel5VGMLypjkf+UbYw5Pea71BTtN0CB2VXB1dwF+o+4qA66wnRkhZUJaIGYSGvKQ==
-
 rollup-plugin-svelte@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/rollup-plugin-svelte/-/rollup-plugin-svelte-6.0.2.tgz#661b31fffa9bffcde906ead963e8aab3077657c3"
