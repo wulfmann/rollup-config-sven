@@ -4,10 +4,6 @@
 
 `sven` is a minimal static site generator for [svelte](https://svelte.dev/). It is a [rollup config](https://rollupjs.org/guide/en/#loading-a-configuration-from-a-node-package) module.
 
-```bash
-npm i -g svelte rollup rollup-config-sven
-```
-
 It implements a very small number of features. If you have a complex use-case, it may be better to evsluate one of these:
 
 - [sapper](https://sapper.svelte.dev/)
@@ -15,17 +11,57 @@ It implements a very small number of features. If you have a complex use-case, i
 
 ## Quickstart
 
-Add the following script to your `package.json` scripts section:
+Created a new `index.svelte` file in a `pages` directory:
 
-```json
-"build": "rollup -c node:sven" 
+```html
+<main>Home</home>
 ```
 
-## API
+`sven` requires both `svelte` and `rollup` as peer dependencies.
 
-Under the hood, all `sven` is doing is dynamically generating rollup config. Here are the high-level steps it performs:
+```bash
+$ yarn add svelte rollup rollup-config-sven -D
+```
 
-- generates an entrypoint for every `.svelte` file in the `pages` directory
-- generates a `.js` file for every entrypoint into the `assets` directory
-- generates a `.html` file for each entrypoint into the `public` directory
-- generates a `.css` file for every entrypoint into the `assets` directory
+After you've installed the dependencies, you can run the build with:
+
+```bash
+$ npx rollup -c node:sven" 
+```
+
+You should now have a `public` directory containing your static files!
+
+Check out the [example](/example) for a more advanced example.
+
+## Overview
+
+`sven` is based on rollup, and uses svelte components to generate static html pages + assets.
+
+It accomplishes this by dynamically creating virtual modules as rollup inputs that export the page components with optional props / targets.
+
+The CSS and Javascript that is parsed from the page components are split into asset files.
+
+These assets are linked to an html file that is generated.
+
+## Configuration
+
+You can modify the `sven` configuration with a `sven.config.js`.
+
+```js
+export default {
+  assetDir: 'assets',
+
+  /**
+   * `svelteConfig` is an object that is passed into the svelte rollup plugin.
+   */
+  svelteConfig: {
+    emitCss: true
+  },
+  
+  /**
+   * Enables clean URLs
+   */
+  cleanUrls: true
+}
+```
+
