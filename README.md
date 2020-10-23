@@ -2,9 +2,13 @@
 
 # sven
 
-`sven` is a minimal static site generator for [svelte](https://svelte.dev/). It is a [rollup config](https://rollupjs.org/guide/en/#loading-a-configuration-from-a-node-package) module.
+`sven` is a minimal static site generator for [svelte](https://svelte.dev/). It aims to implement the following use-case:
 
-It implements a very small number of features. If you have a complex use-case, it may be better to evsluate one of these:
+- Generate static files from svelte components (treated as routes)
+- Split common css/js files into the bundle
+- Allow for asset caching
+
+If you have a more advanced use-case you may want to evaluate one of the following:
 
 - [sapper](https://sapper.svelte.dev/)
 - [elder](https://github.com/Elderjs/elderjs)
