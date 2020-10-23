@@ -58,8 +58,13 @@ export const createConfig = async () => {
         dir: config.outDir,
         format: 'esm',
         entryFileNames: `${config.assetDir}/${name}/[hash].js`,
-        chunkFileNames: `${config.assetDir}/${name}/[hash].js`,
-        sourcemap: config.sourceMaps
+        chunkFileNames: `${config.assetDir}/[name].[hash].js`,
+        sourcemap: config.sourceMaps,
+
+        manualChunks: {
+          'svelte': ['node_modules/svelte'],
+          'common.styles': config.commonStyles
+        }
       },
 
       plugins: [
@@ -67,12 +72,13 @@ export const createConfig = async () => {
           targets: [
             {
               src: `${config.staticDir}/*`,
-              dest: 'public',
+              dest: config.outDir,
             },
           ],
         }),
 
         cssChunks({
+          chunkFileNames: `${config.assetDir}/${name}/[hash].css`,
           entryFileNames: `${config.assetDir}/${name}/[hash].css`,
         }),
 

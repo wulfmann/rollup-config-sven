@@ -51,6 +51,27 @@ This is processed by a variety of rollup plugins that perform the following step
 
 This leaves you with a deployable static site in the <outDir>.
 
+### Asset Bundling Strategy
+
+Paths in the <commonStyles> array are bundled into a common stylesheet. Any component that imports one of these paths will result in a link being added to the generated HTML file.
+
+Example:
+
+```
+styles/common.css -> assets/common.[hash].css
+```
+
+Any CSS or Javascript that is parsed from the svelte component is emitted as a chunk in the <assetDir> under the path of the route.
+
+Example:
+
+```
+admin/dashboard.svelte -> assets/admin/dashboard/[hash].css
+admin/dashboard.svelte -> assets/admin/dashboard/[hash].js
+```
+
+Svelte itself is also treated as an external module so that it can be cached across routes. It is generated into `assets/svelte.[hash].js` and linked in all resulting HTML files.
+
 ## Configuration
 
 You can modify the `sven` configuration with a `sven.config.js`.
@@ -111,4 +132,24 @@ module.exports = {
     emitCss: true
   }
 }
+```
+
+## Development
+
+Install dependencies:
+
+```bash
+$ yarn
+```
+
+Run in development mode:
+
+```bash
+$ yarn dev
+```
+
+Build:
+
+```bash
+$ yarn build
 ```

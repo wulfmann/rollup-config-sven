@@ -7,6 +7,7 @@ export interface Config {
     outDir: string;
     staticDir: string
     cleanUrls: boolean;
+    commonStyles: string[];
     production: boolean;
     sourceMaps: boolean;
     svelteConfig: {
@@ -22,6 +23,7 @@ export const loadConfig = () => {
         pagesDir: `pages`,
         outDir: 'public',
         staticDir: 'static',
+        commonStyles: ['styles/common.css'],
         cleanUrls: true,
         production,
         sourceMaps: !production,

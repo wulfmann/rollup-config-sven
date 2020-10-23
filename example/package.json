@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c node:sven"
+    "build": "rm -rf out && rollup -c node:sven"
   },
   "devDependencies": {
     "rollup": "latest",
