@@ -7,10 +7,7 @@ import virtual from '@rollup/plugin-virtual';
 import css from "rollup-plugin-css-only";
 import path from 'path'
 
-import { autoGeneratePages } from "./config";
-
-const production =
-  process.env.NODE_ENV === "production" || !process.env.ROLLUP_WATCH;
+import { loadConfig, autoGeneratePages, Config } from "./config";
 
 const getPathName = (page: string, clean: boolean): string => {
   const pages = 'pages'
@@ -32,43 +29,50 @@ const getPathName = (page: string, clean: boolean): string => {
 }
 
 export const createConfig = async () => {
-  const pages = await autoGeneratePages();
+  const config: Config = loadConfig()
+  const pages = await autoGeneratePages(config);
 
   return pages.map((page: string) => {
     const entry = `import Comp from '${process.cwd()}/${page}';\nexport default new Comp({ target: document.body })`;
-    const name = getPathName(page, true);
-    const cssFilename = `public/assets/${name}.css`;
-    
+    const name = getPathName(page, config.cleanUrls);
+    const cssFilename = `${config.outDir}/${config.assetDir}/${name}.css`;
+  
     const htmlConfig = {
       fileName: name + '.html'
     }
-
-    const sourceMap = false;
 
     return {
       cache: true,
       treeshake: true,
       input: 'entry',
+
       output: {
-        dir: "public",
+        dir: config.outDir,
         format: "esm",
-        entryFileNames: "assets/[hash].js",
-        chunkFileNames: "assets/[hash].js",
+        entryFileNames: `${config.assetDir}/[hash].js`,
+        chunkFileNames: `${config.assetDir}/[hash].js`,
       },
+
       plugins: [
+        /**
+         * We create a virtual module to use as the entry point.
+         * Functionally this treats each page as it's own app
+         */
         virtual({ entry }),
+
         html(htmlConfig),
-        svelte({
-          emitCss: true
-        }),
+
+        svelte(config.svelteConfig),
+
         nodeResolve({
           browser: true,
           dedupe: ["svelte"],
           preferBuiltins: true,
         }),
+
         css({ output: cssFilename }),
-        commonjs({ sourceMap }),
-        production && terser(),
+        commonjs({ sourceMap: config.sourceMaps }),
+        config.production && terser(),
       ],
     };
   });

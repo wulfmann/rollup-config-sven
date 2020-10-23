@@ -48,20 +48,16 @@ These assets are linked to an html file that is generated.
 You can modify the `sven` configuration with a `sven.config.js`.
 
 ```js
-export default {
+module.exports = {
+  outDir: 'public',
   assetDir: 'assets',
-
-  /**
-   * `svelteConfig` is an object that is passed into the svelte rollup plugin.
-   */
+  cleanUrls: true,
+  pages: 'pages/**/*.svelte',
+  production: process.env.NODE_ENV === "production" || !process.env.ROLLUP_WATCH,
+  sourceMaps: !production,
   svelteConfig: {
     emitCss: true
-  },
-  
-  /**
-   * Enables clean URLs
-   */
-  cleanUrls: true
+  }
 }
 ```
 
